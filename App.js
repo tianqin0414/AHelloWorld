@@ -16,30 +16,43 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-
+/*
+TQ0730
+ */
 class CountDown extends Component {
   state = {
-    count: 30,
+    count: 5,
   };
+  renderResult = () =>{
+    const { count } = this.state;
+    if(count > 0){
+      return <Text>{count}</Text>
+    }
+    else {
+      return <text>时间到!</text>
+    }
+  }
   render() {
     const { count } = this.state;
     return (
-      <Text>{count}</Text>
+      <view>{this.renderResult()}</view>
     )
   }
   componentDidMount() {
-    this.timer = setInterval(() => {
+    this.timer = setTimeout (
       const { count } = this.state;
       if (count === 0) {
-        return clearInterval(this.timer);
+        //return clearInterval(this.timer);
+         this.timer && clearTimeout();
       }
       this.setState({
         count: count - 1,
       });
-    }, 1000);
+    , 500);
   }
   componentWillUnmount() {
-    clearInterval(this.timer);
+    //clearInterval(this.timer);
+    this.timer && clearTimeout();
   }
 }
 

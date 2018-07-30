@@ -12,69 +12,70 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+  'Double tap R on your keyboard to reload,\n' +
+  'Shake or press menu button for dev menu',
 });
 
 /*
 TQ0730
  */
 class CountDown extends Component {
-  state = {
-    count: 5,
-  };
-  renderResult = () =>{
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 50,
+    };
+  }
+
+  renderResult=()=>{
     const { count } = this.state;
     if(count > 0){
       return <Text>{count}</Text>
     }
     else {
-      return <text>时间到!</text>
+      return <Text>时间到!</Text>
     }
   }
   render() {
-    const { count } = this.state;
     return (
-      <view>{this.renderResult()}</view>
-    )
+      <View>{this.renderResult()}</View>
+  )
   }
   componentDidMount() {
-    this.timer = setTimeout (
+    this.timer = setInterval(() => {
       const { count } = this.state;
       if (count === 0) {
-        //return clearInterval(this.timer);
-         this.timer && clearTimeout();
+        return clearInterval(this.timer);
       }
       this.setState({
         count: count - 1,
       });
-    , 500);
+    }, 500);
   }
   componentWillUnmount() {
-    //clearInterval(this.timer);
-    this.timer && clearTimeout();
+    clearInterval(this.timer);
   }
 }
-
 
 class GoodMorning extends Component {
   render() {
     return (
       <Text>Good morning, {this.props.name}!</Text>
-    )
+  )
   }
 }
 
-
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <View style={styles.container}>
-        <CountDown />
-        <GoodMorning name="Sir" />
+  <CountDown />
+    <GoodMorning name="Sir" />
       </View>
-    );
+  );
   }
 }
 
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   instructions: {
-       textAlign: 'center',
+    textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },

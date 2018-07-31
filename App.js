@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -23,7 +23,7 @@ class CountDown extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 50,
+      count: 10,
     };
   }
 
@@ -41,6 +41,13 @@ class CountDown extends Component {
       <View>{this.renderResult()}</View>
   )
   }
+
+  add = (time) =>{
+    this.setState({
+      count: this.state.count +time
+    })
+  }
+
   componentDidMount() {
     this.timer = setInterval(() => {
       const { count } = this.state;
@@ -69,10 +76,18 @@ export default class App extends Component {
   constructor(props) {
     super(props);
   }
+
+
+  onPress = () => {
+   this.countDown.add(10);
+  }
   render() {
     return (
+
       <View style={styles.container}>
-  <CountDown />
+      <TouchableOpacity onPress = {this.onPress} ><Text> 增加10s </Text></TouchableOpacity>
+      <CountDown ref={countDown => this.countDown = countDown}/>
+
     <GoodMorning name="Sir" />
       </View>
   );
